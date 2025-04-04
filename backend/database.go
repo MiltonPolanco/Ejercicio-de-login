@@ -3,7 +3,7 @@ package main
 import (
     "database/sql"
     "log"
-    "os" // Para trabajar con el sistema de archivos
+ 
 
     _ "github.com/mattn/go-sqlite3" // Driver SQLite
 )

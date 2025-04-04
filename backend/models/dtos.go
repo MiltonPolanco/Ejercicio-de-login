@@ -46,6 +46,12 @@ type APIResponse struct {
 	Error   *ErrorDetail `json:"error,omitempty"` // Pointer allows omitting the field if there's no error
 }
 
+// UserResponse define la estructura de la respuesta pública de un usuario.
+type UserResponse struct {
+    ID       int64  `json:"id"`
+    Username string `json:"username"`
+}
+
 // --- Factory Functions for API Responses ---
 
 // NewSuccessResponse creates a standard success response with data.

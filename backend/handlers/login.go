@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	// Import your models package (adjust path 'myapp' if your module name is different)
-	"myapp/models"
+	"myapp/backend/models"
 
 	"golang.org/x/crypto/bcrypt"
 )

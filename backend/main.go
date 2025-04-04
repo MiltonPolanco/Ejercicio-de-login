@@ -3,7 +3,7 @@ package main
 import (
     "log"
     "net/http"
-
+	"myapp/backend/handlers"
     "github.com/go-chi/chi/v5"
     "github.com/go-chi/chi/v5/middleware"
 )
@@ -28,12 +28,12 @@ func main() {
     r.Get("/", func(w http.ResponseWriter, r *http.Request) {
         w.Write([]byte("API de Login v1.0"))
     })
-    r.Post("/register", postRegisterHandler(db))
-    r.Post("/login", postLoginHandler(db))
+	r.Post("/register", handlers.PostRegisterHandler(db))
+	r.Post("/login", handlers.PostLoginHandler(db))
 
     // Ruta para obtener datos de usuario (protegida más tarde con JWT)
     // Por ahora, cualquiera puede acceder si conoce el ID
-    r.Get("/users/{userID}", getUserHandler(db))
+    r.Get("/users/{userID}", handlers.GetUserHandler(db))
 
 
     // Iniciar servidor
