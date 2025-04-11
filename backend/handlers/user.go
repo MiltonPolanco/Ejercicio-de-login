@@ -6,14 +6,13 @@ import (
     "log"
     "net/http"
     "strconv"
-	"myapp/backend/models"
+
     "github.com/go-chi/chi/v5"
+    "myapp/backend/models"
 )
 
-// getUserHandler obtiene info pública de un usuario por ID
 func GetUserHandler(db *sql.DB) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        // Obtener userID de la URL
         userIDStr := chi.URLParam(r, "userID")
         userID, err := strconv.Atoi(userIDStr)
         if err != nil {
@@ -21,8 +20,7 @@ func GetUserHandler(db *sql.DB) http.HandlerFunc {
             return
         }
 
-        // Consultar solo los datos públicos (ID, Username)
-        var userResp models.UserResponse // Usa la struct segura para respuestas
+        var userResp models.UserResponse
         err = db.QueryRow("SELECT id, username FROM users WHERE id = ?", userID).Scan(&userResp.ID, &userResp.Username)
         if err != nil {
             if err == sql.ErrNoRows {
@@ -34,7 +32,6 @@ func GetUserHandler(db *sql.DB) http.HandlerFunc {
             return
         }
 
-        // Devolver los datos del usuario
         w.Header().Set("Content-Type", "application/json")
         json.NewEncoder(w).Encode(userResp)
     }

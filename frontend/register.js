@@ -1,4 +1,3 @@
-// register.js
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm')
     const messageElement = document.getElementById('registerMessage')
@@ -17,21 +16,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`${backendUrl}/register`, {
+            const response = await fetch(`${backendUrl}/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password })
-            })
+            })            
 
             const data = await response.json() // Esperamos JSON del backend
 
             if (response.ok) { // Status 201 Created
                 messageElement.style.color = 'green'
+                // Suponemos que el backend devuelve data.message o similar
                 messageElement.textContent = data.message + ' Pueden ir a Login.'
                 registerForm.reset() // Limpiar formulario
             } else { // Error (400, 409, 500...)
+                // Si data.error es un objeto, mostrar data.error.message
+                const errorMsg = data.error && data.error.message ? data.error.message : response.statusText
                 messageElement.style.color = 'red'
-                messageElement.textContent = `Error: ${data.error || response.statusText}`
+                messageElement.textContent = `Error: ${errorMsg}`
             }
         } catch (error) {
             console.error('Error de registro:', error)
